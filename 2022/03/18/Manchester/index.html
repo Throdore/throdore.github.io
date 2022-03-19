@@ -43,7 +43,7 @@
 <meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/P3pGMT.png">
 <meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/aWl350.png">
 <meta property="article:published_time" content="2022-03-18T11:43:26.000Z">
-<meta property="article:modified_time" content="2022-03-19T08:22:51.233Z">
+<meta property="article:modified_time" content="2022-03-19T08:49:15.018Z">
 <meta property="article:author" content="OAK">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/7uLFjH.png">
@@ -101,7 +101,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">Home</a></li><li class="menu-item menu-item-about"><a href="/about" rel="section">About</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section">Archives</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">Home</a></li><li class="menu-item menu-item-about"><a href="https://www.xinsec.cn/2022/03/19/about/" rel="noopener" target="_blank">About</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section">Archives</a></li>
   </ul>
 </nav>
 
@@ -223,7 +223,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-03-19 16:22:51" itemprop="dateModified" datetime="2022-03-19T16:22:51+08:00">2022-03-19</time>
+      <time title="Modified: 2022-03-19 16:49:15" itemprop="dateModified" datetime="2022-03-19T16:49:15+08:00">2022-03-19</time>
     </span>
 
   
@@ -237,6 +237,8 @@
     
     <div class="post-body" itemprop="articleBody">
         <p>大家好，我是橡树，今天给大家带来有关无线遥控信号逆向分析的文章。当今社会，电子产品大量依靠各种无线传输技术，无线通信技术上的传输、认证、加密等安全问题，在各种设备对无线技术依赖加深的情况下变得越来越重要。无线安全的研究领域非常的宽泛，随着越来越多的物联网控制设备采用无线遥控信号，无线安全方面的研究也逐渐被更多的网络安全研究员所关注。本文结合作者在无线安全领域做出的一些实例侦听和逆向分析，希望能够抛砖引玉为无线安全研究做出贡献，同时对于研究过程中的遇到的一些问题希望可以得到解答。</p>
+<span id="more"></span>
+
 <h1 id="0x01-信号101"><a href="#0x01-信号101" class="headerlink" title="0x01 信号101"></a>0x01 信号101</h1><p>要研究一个无线遥控器，首先我们需要先了解该无线遥控信号一般工作所在的ISM频段，例如汽车无线钥匙和电动自行车的工作频段通常是在315Mhz或433Mhz传输数据。如果是无钥匙启动系统则多会采用123Mhz或者13.56Mhz的RFID技术。车库卷闸门遥控信号一般工作频段是在315 Mhz，除此之外还有车库收费挡杆的遥控信号频段都大多是工作在433 Mhz或315Mhz频段。诸如门禁卡、无线钥匙、无线遥控器、手机、汽车等只要使用了无线介质进行数据交互，那么这条无线链路就有可能被监听、解密、重放、劫持甚至被入侵控制。<br>当无线遥控钥匙在发了一串0和1之后，需要正确的调制及编码方式，收发双方才可以进行交互，通常信号的调制方面主要以OOK&#x2F;ASK&#x2F;FSK为主，这几种调制方案的应用非常广泛，其中OOK调制方案是最简单的，仅仅需要将载波信号发送到功放和天线。当这些信号被别有用心的人捕获或者破解，后果是无法想象的。</p>
 <p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/7uLFjH.png" alt="7uLFjH"></p>
 <p>(ASK信号在频谱上的现象)</p>
@@ -285,8 +287,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/03/18/hello-world/" rel="prev" title="Hello World">
-                  <i class="fa fa-chevron-left"></i> Hello World
+                <a href="/2022/03/18/hello-world/" rel="prev" title="HEXO用法">
+                  <i class="fa fa-chevron-left"></i> HEXO用法
                 </a>
             </div>
             <div class="post-nav-item">
