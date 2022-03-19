@@ -20,29 +20,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="关于小小书童Tips:">
+    <meta name="description" content="ROS2的基本概念ROS是一个用于在不同进程间匿名的发布、订阅、传递信息的中间件。 ROS2系统的核心部分是ROS网络(ROS Graph)。ROS网络是指在ROS系统中不同的节点间相互通信的连接关系。 ROS Graph这里翻译成了ROS网络，因为我觉得Graph更加抽象，而网络的概念更容易帮助理解其内涵。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="About">
-<meta property="og:url" content="http://example.com/2022/03/19/about/index.html">
+<meta property="og:title" content="ros2">
+<meta property="og:url" content="http://example.com/2022/03/19/ros2/index.html">
 <meta property="og:site_name" content="橡树‘s技术博客">
-<meta property="og:description" content="关于小小书童Tips:">
+<meta property="og:description" content="ROS2的基本概念ROS是一个用于在不同进程间匿名的发布、订阅、传递信息的中间件。 ROS2系统的核心部分是ROS网络(ROS Graph)。ROS网络是指在ROS系统中不同的节点间相互通信的连接关系。 ROS Graph这里翻译成了ROS网络，因为我觉得Graph更加抽象，而网络的概念更容易帮助理解其内涵。">
 <meta property="og:locale">
-<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/1.jpg">
-<meta property="article:published_time" content="2022-03-19T08:36:55.000Z">
-<meta property="article:modified_time" content="2022-03-19T08:51:15.606Z">
+<meta property="article:published_time" content="2022-03-19T13:11:43.000Z">
+<meta property="article:modified_time" content="2022-03-19T13:19:49.497Z">
 <meta property="article:author" content="OAK">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/1.jpg">
 
 
-<link rel="canonical" href="http://example.com/2022/03/19/about/">
+<link rel="canonical" href="http://example.com/2022/03/19/ros2/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"http://example.com/2022/03/19/about/","path":"2022/03/19/about/","title":"About"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"http://example.com/2022/03/19/ros2/","path":"2022/03/19/ros2/","title":"ros2"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>About | 橡树‘s技术博客</title>
+<title>ros2 | 橡树‘s技术博客</title>
   
 
 
@@ -105,7 +103,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           Table of Contents
@@ -118,6 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS2%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">ROS2的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS2-%E6%94%AF%E6%8C%81%E7%9A%84%E5%B9%B3%E5%8F%B0"><span class="nav-number">2.</span> <span class="nav-text">ROS2 支持的平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-ROS2"><span class="nav-number">3.</span> <span class="nav-text">Install ROS2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0ROS2%E6%BA%90"><span class="nav-number">4.</span> <span class="nav-text">添加ROS2源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%BA%90"><span class="nav-number">5.</span> <span class="nav-text">更新源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ROS2%E6%A1%8C%E9%9D%A2%E7%89%88"><span class="nav-number">6.</span> <span class="nav-text">安装ROS2桌面版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BDROS2"><span class="nav-number">7.</span> <span class="nav-text">卸载ROS2</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -172,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/19/about/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/19/ros2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/index.jpeg">
@@ -185,12 +184,12 @@
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="About | 橡树‘s技术博客">
+      <meta itemprop="name" content="ros2 | 橡树‘s技术博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          About
+          ros2
         </h1>
 
         <div class="post-meta-container">
@@ -202,7 +201,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-03-19 16:36:55 / Modified: 16:51:15" itemprop="dateCreated datePublished" datetime="2022-03-19T16:36:55+08:00">2022-03-19</time>
+      <time title="Created: 2022-03-19 21:11:43 / Modified: 21:19:49" itemprop="dateCreated datePublished" datetime="2022-03-19T21:11:43+08:00">2022-03-19</time>
     </span>
 
   
@@ -215,13 +214,32 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>关于小小书童Tips:</p>
+        <h2 id="ROS2的基本概念"><a href="#ROS2的基本概念" class="headerlink" title="ROS2的基本概念"></a>ROS2的基本概念</h2><p>ROS是一个用于在不同进程间匿名的发布、订阅、传递信息的中间件。 ROS2系统的核心部分是ROS网络(ROS Graph)。ROS网络是指在ROS系统中不同的节点间相互通信的连接关系。 ROS Graph这里翻译成了ROS网络，因为我觉得Graph更加抽象，而网络的概念更容易帮助理解其内涵。</p>
 <span id="more"></span>
 
-<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/1.jpg" alt="1"></p>
-<p>大三在读，车联网安全(信号&amp;协议)研究员，物联网工程师，ROS机器人开发者。</p>
-<p>平时分享一些学过的技巧文章在这里，希望可以帮助到大家。</p>
-<p>小小书童，可笑可笑。</p>
+<p>ROS2 是新一代机器人操作系统。2020年6月5日，ROS2 的最新版本 <code>Foxy Fitzroy</code> 正式发布了， 支持到2023年的3月。</p>
+<h2 id="ROS2-支持的平台"><a href="#ROS2-支持的平台" class="headerlink" title="ROS2 支持的平台"></a>ROS2 支持的平台</h2><ul>
+<li>Linux (Ubuntu Focal(20.04))</li>
+<li>macOS</li>
+<li>Windows</li>
+</ul>
+<h2 id="Install-ROS2"><a href="#Install-ROS2" class="headerlink" title="Install ROS2"></a>Install ROS2</h2><p>、、、更换语言</p>
+<p>sudo locale-gen en_US en_US.UTF-8<br>sudo update-locale LC_ALL&#x3D;en_US.UTF-8 LANG&#x3D;en_US.UTF-8<br>export LANG&#x3D;en_US.UTF-8</p>
+<p>、、、</p>
+<h2 id="添加ROS2源"><a href="#添加ROS2源" class="headerlink" title="添加ROS2源"></a>添加ROS2源</h2><p>、、、</p>
+<p>sudo apt update<br>sudo apt install curl gnupg2 lsb-release</p>
+<p>curl <a target="_blank" rel="noopener" href="http://repo.ros2.org/repos.key">http://repo.ros2.org/repos.key</a> | sudo apt-key add - </p>
+<p>sudo sh -c ‘echo “deb <a target="_blank" rel="noopener" href="http://packages.ros.org/ros2/ubuntu">http://packages.ros.org/ros2/ubuntu</a> <code>lsb_release -cs</code> main” &gt; &#x2F;etc&#x2F;apt&#x2F;sources.list.d&#x2F;ros2-latest.list’</p>
+<p>、、、</p>
+<h2 id="更新源"><a href="#更新源" class="headerlink" title="更新源"></a>更新源</h2><p>、、、</p>
+<p>sudo apt update</p>
+<p>、、、</p>
+<h2 id="安装ROS2桌面版"><a href="#安装ROS2桌面版" class="headerlink" title="安装ROS2桌面版"></a>安装ROS2桌面版</h2><p>、、、</p>
+<p>sudo apt install ros-foxy-desktop </p>
+<p>、、、</p>
+<h2 id="卸载ROS2"><a href="#卸载ROS2" class="headerlink" title="卸载ROS2"></a>卸载ROS2</h2><p>、、、</p>
+<p>sudo apt remove ros-foxy-*<br>sudo apt autoremove</p>
+<p>、、、</p>
 
     </div>
 
@@ -235,14 +253,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/03/18/Manchester/" rel="prev" title="Manchester(逆向拨码器拨码数据)">
-                  <i class="fa fa-chevron-left"></i> Manchester(逆向拨码器拨码数据)
+                <a href="/2022/03/19/about/" rel="prev" title="About">
+                  <i class="fa fa-chevron-left"></i> About
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/03/19/ros2/" rel="next" title="ros2">
-                  ros2 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
