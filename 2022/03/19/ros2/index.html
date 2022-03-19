@@ -22,13 +22,13 @@
 
     <meta name="description" content="ROS2的基本概念ROS是一个用于在不同进程间匿名的发布、订阅、传递信息的中间件。 ROS2系统的核心部分是ROS网络(ROS Graph)。ROS网络是指在ROS系统中不同的节点间相互通信的连接关系。 ROS Graph这里翻译成了ROS网络，因为我觉得Graph更加抽象，而网络的概念更容易帮助理解其内涵。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ros2">
+<meta property="og:title" content="Ros2 Install">
 <meta property="og:url" content="http://example.com/2022/03/19/ros2/index.html">
 <meta property="og:site_name" content="橡树‘s技术博客">
 <meta property="og:description" content="ROS2的基本概念ROS是一个用于在不同进程间匿名的发布、订阅、传递信息的中间件。 ROS2系统的核心部分是ROS网络(ROS Graph)。ROS网络是指在ROS系统中不同的节点间相互通信的连接关系。 ROS Graph这里翻译成了ROS网络，因为我觉得Graph更加抽象，而网络的概念更容易帮助理解其内涵。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-03-19T13:11:43.000Z">
-<meta property="article:modified_time" content="2022-03-19T13:19:49.497Z">
+<meta property="article:modified_time" content="2022-03-19T13:28:53.409Z">
 <meta property="article:author" content="OAK">
 <meta name="twitter:card" content="summary">
 
@@ -37,10 +37,10 @@
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"http://example.com/2022/03/19/ros2/","path":"2022/03/19/ros2/","title":"ros2"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"http://example.com/2022/03/19/ros2/","path":"2022/03/19/ros2/","title":"Ros2 Install"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>ros2 | 橡树‘s技术博客</title>
+<title>Ros2 Install | 橡树‘s技术博客</title>
   
 
 
@@ -184,12 +184,12 @@
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="ros2 | 橡树‘s技术博客">
+      <meta itemprop="name" content="Ros2 Install | 橡树‘s技术博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ros2
+          Ros2 Install
         </h1>
 
         <div class="post-meta-container">
@@ -201,7 +201,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-03-19 21:11:43 / Modified: 21:19:49" itemprop="dateCreated datePublished" datetime="2022-03-19T21:11:43+08:00">2022-03-19</time>
+      <time title="Created: 2022-03-19 21:11:43 / Modified: 21:28:53" itemprop="dateCreated datePublished" datetime="2022-03-19T21:11:43+08:00">2022-03-19</time>
     </span>
 
   
@@ -223,23 +223,23 @@
 <li>macOS</li>
 <li>Windows</li>
 </ul>
-<h2 id="Install-ROS2"><a href="#Install-ROS2" class="headerlink" title="Install ROS2"></a>Install ROS2</h2><p>、、、更换语言</p>
-<p>sudo locale-gen en_US en_US.UTF-8<br>sudo update-locale LC_ALL&#x3D;en_US.UTF-8 LANG&#x3D;en_US.UTF-8<br>export LANG&#x3D;en_US.UTF-8</p>
-<p>、、、</p>
-<h2 id="添加ROS2源"><a href="#添加ROS2源" class="headerlink" title="添加ROS2源"></a>添加ROS2源</h2><p>、、、</p>
-<p>sudo apt update<br>sudo apt install curl gnupg2 lsb-release</p>
-<p>curl <a target="_blank" rel="noopener" href="http://repo.ros2.org/repos.key">http://repo.ros2.org/repos.key</a> | sudo apt-key add - </p>
-<p>sudo sh -c ‘echo “deb <a target="_blank" rel="noopener" href="http://packages.ros.org/ros2/ubuntu">http://packages.ros.org/ros2/ubuntu</a> <code>lsb_release -cs</code> main” &gt; &#x2F;etc&#x2F;apt&#x2F;sources.list.d&#x2F;ros2-latest.list’</p>
-<p>、、、</p>
-<h2 id="更新源"><a href="#更新源" class="headerlink" title="更新源"></a>更新源</h2><p>、、、</p>
-<p>sudo apt update</p>
-<p>、、、</p>
-<h2 id="安装ROS2桌面版"><a href="#安装ROS2桌面版" class="headerlink" title="安装ROS2桌面版"></a>安装ROS2桌面版</h2><p>、、、</p>
-<p>sudo apt install ros-foxy-desktop </p>
-<p>、、、</p>
-<h2 id="卸载ROS2"><a href="#卸载ROS2" class="headerlink" title="卸载ROS2"></a>卸载ROS2</h2><p>、、、</p>
-<p>sudo apt remove ros-foxy-*<br>sudo apt autoremove</p>
-<p>、、、</p>
+<h2 id="Install-ROS2"><a href="#Install-ROS2" class="headerlink" title="Install ROS2"></a>Install ROS2</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">更换语言
+<span class="token function">sudo</span> locale-gen en_US en_US.UTF-8
+<span class="token function">sudo</span> update-locale <span class="token assign-left variable"><span class="token environment constant">LC_ALL</span></span><span class="token operator">=</span>en_US.UTF-8 <span class="token assign-left variable"><span class="token environment constant">LANG</span></span><span class="token operator">=</span>en_US.UTF-8
+<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">LANG</span></span><span class="token operator">=</span>en_US.UTF-8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="添加ROS2源"><a href="#添加ROS2源" class="headerlink" title="添加ROS2源"></a>添加ROS2源</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update
+<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">curl</span> gnupg2 lsb-release
+<span class="token function">curl</span> http://repo.ros2.org/repos.key <span class="token operator">|</span> <span class="token function">sudo</span> apt-key <span class="token function">add</span> - 
+<span class="token function">sudo</span> <span class="token function">sh</span> -c <span class="token string">'echo "deb http://packages.ros.org/ros2/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/ros2-latest.list'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h2 id="更新源"><a href="#更新源" class="headerlink" title="更新源"></a>更新源</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="安装ROS2桌面版"><a href="#安装ROS2桌面版" class="headerlink" title="安装ROS2桌面版"></a>安装ROS2桌面版</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> ros-foxy-desktop <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+
+<h2 id="卸载ROS2"><a href="#卸载ROS2" class="headerlink" title="卸载ROS2"></a>卸载ROS2</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> remove ros-foxy-*
+<span class="token function">sudo</span> <span class="token function">apt</span> autoremove <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
 
     </div>
 
