@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-03-19T08:22:51.233Z</updated>
+  <updated>2022-03-19T08:39:29.844Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>About</title>
+    <link href="http://example.com/2022/03/19/about/"/>
+    <id>http://example.com/2022/03/19/about/</id>
+    <published>2022-03-19T08:36:55.000Z</published>
+    <updated>2022-03-19T08:39:29.844Z</updated>
+    
+    <content type="html"><![CDATA[<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/1.jpg" alt="1"></p><p>大三在读，车联网安全(信号&amp;协议)研究员，物联网工程师，ROS机器人开发者。</p><p>平时分享一些学过的技巧文章在这里，希望可以帮助到大家。</p><p>小小书童，可笑可笑。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://gitee.com/Theodorea/oss/raw/master/uPic/1.jpg&quot; alt=&quot;1&quot;&gt;&lt;/p&gt;
+&lt;p&gt;大三在读，车联网安全(信号&amp;amp;协议)研究员，物联网工程师，ROS机器人开发者。&lt;/p&gt;
+&lt;p&gt;平时分享一些</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Manchester(逆向拨码器拨码数据)</title>
