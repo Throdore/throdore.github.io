@@ -20,27 +20,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="ROS2的基本概念ROS是一个用于在不同进程间匿名的发布、订阅、传递信息的中间件。 ROS2系统的核心部分是ROS网络(ROS Graph)。ROS网络是指在ROS系统中不同的节点间相互通信的连接关系。 ROS Graph这里翻译成了ROS网络，因为我觉得Graph更加抽象，而网络的概念更容易帮助理解其内涵。">
+    <meta name="description" content="0x01 Keeloq算法介绍 KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y310或者4byte密文y310，和一个密钥寄存器，用于存放8byte密钥k63~0。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Ros2 Install">
-<meta property="og:url" content="http://example.com/2022/03/19/ros2/index.html">
+<meta property="og:title" content="keeloq">
+<meta property="og:url" content="http://example.com/2022/03/24/keeloq/index.html">
 <meta property="og:site_name" content="橡树‘s技术博客">
-<meta property="og:description" content="ROS2的基本概念ROS是一个用于在不同进程间匿名的发布、订阅、传递信息的中间件。 ROS2系统的核心部分是ROS网络(ROS Graph)。ROS网络是指在ROS系统中不同的节点间相互通信的连接关系。 ROS Graph这里翻译成了ROS网络，因为我觉得Graph更加抽象，而网络的概念更容易帮助理解其内涵。">
+<meta property="og:description" content="0x01 Keeloq算法介绍 KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y310或者4byte密文y310，和一个密钥寄存器，用于存放8byte密钥k63~0。">
 <meta property="og:locale">
-<meta property="article:published_time" content="2022-03-19T13:11:43.000Z">
-<meta property="article:modified_time" content="2022-03-19T13:28:53.409Z">
+<meta property="article:published_time" content="2022-03-24T13:43:53.000Z">
+<meta property="article:modified_time" content="2022-03-24T14:08:23.517Z">
 <meta property="article:author" content="OAK">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2022/03/19/ros2/">
+<link rel="canonical" href="http://example.com/2022/03/24/keeloq/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"http://example.com/2022/03/19/ros2/","path":"2022/03/19/ros2/","title":"Ros2 Install"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"http://example.com/2022/03/24/keeloq/","path":"2022/03/24/keeloq/","title":"keeloq"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Ros2 Install | 橡树‘s技术博客</title>
+<title>keeloq | 橡树‘s技术博客</title>
   
 
 
@@ -116,7 +116,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS2%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">ROS2的基本概念</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ROS2-%E6%94%AF%E6%8C%81%E7%9A%84%E5%B9%B3%E5%8F%B0"><span class="nav-number">2.</span> <span class="nav-text">ROS2 支持的平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Install-ROS2"><span class="nav-number">3.</span> <span class="nav-text">Install ROS2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0ROS2%E6%BA%90"><span class="nav-number">4.</span> <span class="nav-text">添加ROS2源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E6%BA%90"><span class="nav-number">5.</span> <span class="nav-text">更新源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ROS2%E6%A1%8C%E9%9D%A2%E7%89%88"><span class="nav-number">6.</span> <span class="nav-text">安装ROS2桌面版</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%B8%E8%BD%BDROS2"><span class="nav-number">7.</span> <span class="nav-text">卸载ROS2</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0x01-Keeloq%E7%AE%97%E6%B3%95%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">0x01 Keeloq算法介绍</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -171,7 +171,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/19/ros2/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/03/24/keeloq/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/index.jpeg">
@@ -184,12 +184,12 @@
     </span>
     
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Ros2 Install | 橡树‘s技术博客">
+      <meta itemprop="name" content="keeloq | 橡树‘s技术博客">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Ros2 Install
+          keeloq
         </h1>
 
         <div class="post-meta-container">
@@ -201,7 +201,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-03-19 21:11:43 / Modified: 21:28:53" itemprop="dateCreated datePublished" datetime="2022-03-19T21:11:43+08:00">2022-03-19</time>
+      <time title="Created: 2022-03-24 21:43:53 / Modified: 22:08:23" itemprop="dateCreated datePublished" datetime="2022-03-24T21:43:53+08:00">2022-03-24</time>
     </span>
 
   
@@ -214,32 +214,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="ROS2的基本概念"><a href="#ROS2的基本概念" class="headerlink" title="ROS2的基本概念"></a>ROS2的基本概念</h2><p>ROS是一个用于在不同进程间匿名的发布、订阅、传递信息的中间件。 ROS2系统的核心部分是ROS网络(ROS Graph)。ROS网络是指在ROS系统中不同的节点间相互通信的连接关系。 ROS Graph这里翻译成了ROS网络，因为我觉得Graph更加抽象，而网络的概念更容易帮助理解其内涵。</p>
+        <h2 id="0x01-Keeloq算法介绍"><a href="#0x01-Keeloq算法介绍" class="headerlink" title="0x01 Keeloq算法介绍"></a>0x01 Keeloq算法介绍</h2><p> KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y31<del>0或者4byte密文y31</del>0，和一个密钥寄存器，用于存放8byte密钥k63~0。</p>
 <span id="more"></span>
 
-<p>ROS2 是新一代机器人操作系统。2020年6月5日，ROS2 的最新版本 <code>Foxy Fitzroy</code> 正式发布了， 支持到2023年的3月。</p>
-<h2 id="ROS2-支持的平台"><a href="#ROS2-支持的平台" class="headerlink" title="ROS2 支持的平台"></a>ROS2 支持的平台</h2><ul>
-<li>Linux (Ubuntu Focal(20.04))</li>
-<li>macOS</li>
-<li>Windows</li>
-</ul>
-<h2 id="Install-ROS2"><a href="#Install-ROS2" class="headerlink" title="Install ROS2"></a>Install ROS2</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">更换语言
-<span class="token function">sudo</span> locale-gen en_US en_US.UTF-8
-<span class="token function">sudo</span> update-locale <span class="token assign-left variable"><span class="token environment constant">LC_ALL</span></span><span class="token operator">=</span>en_US.UTF-8 <span class="token assign-left variable"><span class="token environment constant">LANG</span></span><span class="token operator">=</span>en_US.UTF-8
-<span class="token builtin class-name">export</span> <span class="token assign-left variable"><span class="token environment constant">LANG</span></span><span class="token operator">=</span>en_US.UTF-8<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="添加ROS2源"><a href="#添加ROS2源" class="headerlink" title="添加ROS2源"></a>添加ROS2源</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update
-<span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> <span class="token function">curl</span> gnupg2 lsb-release
-<span class="token function">curl</span> http://repo.ros2.org/repos.key <span class="token operator">|</span> <span class="token function">sudo</span> apt-key <span class="token function">add</span> - 
-<span class="token function">sudo</span> <span class="token function">sh</span> -c <span class="token string">'echo "deb http://packages.ros.org/ros2/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/ros2-latest.list'</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-
-<h2 id="更新源"><a href="#更新源" class="headerlink" title="更新源"></a>更新源</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> update<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="安装ROS2桌面版"><a href="#安装ROS2桌面版" class="headerlink" title="安装ROS2桌面版"></a>安装ROS2桌面版</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> ros-foxy-desktop <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-
-<h2 id="卸载ROS2"><a href="#卸载ROS2" class="headerlink" title="卸载ROS2"></a>卸载ROS2</h2><pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> remove ros-foxy-*
-<span class="token function">sudo</span> <span class="token function">apt</span> autoremove <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
-
+<p>KeeLoq数据加密过程模型图如图1所示，首先定义一个非线性表，这个非线性表有5bits输入码，1bit输出码。它在数据寄存器中间隔均匀地取5bits: y31、y26、y20、y9、y1，通过NLF（Nonlinear Logic Function）运算产生一个输出码。输出码再与数据寄存器中的y16与y0以及密钥寄存器中的k0进行异或运算后生成1bit加密数据码。每生成1bit加密数据码，密钥寄存器和数据寄存器分别进行移位，密钥寄存器作循环移位，加密数据码作为数据寄存器移位的输入，重复上述步骤528次后，得到4byte的输出密文。</p>
+<p>NLF(x4,x3,x2,x1,x0)&#x3D;x4x3x2^x4x3x1^x4x2x0^x4x1x0^x4x2^x4x0^x3x2^x3x0^x2x1^x1x0^x1^x0</p>
+<p>针对于Keeloq算法，目前国内比较通俗易懂的文章要来自独角兽安全团队有关于Keeloq的介绍，本文部分文章来自多篇学术论文，站在巨人的肩膀上，能够走的更远，致敬前辈。</p>
+<p>我们先来看看HCS系列芯片，HCS系列芯片是美国Microchip公司推出的芯片，是为远程无“钥匙”系统中加密识别但愿而设计的KEELOQ滚动码编码解码器，它采用Keeloq滚动码算法对所要传输的代码进行加密。</p>
+<p>以HC201举例来看</p>
 
     </div>
 
@@ -253,14 +235,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2022/03/19/about/" rel="prev" title="About">
-                  <i class="fa fa-chevron-left"></i> About
+                <a href="/2022/03/19/ros2/" rel="prev" title="Ros2 Install">
+                  <i class="fa fa-chevron-left"></i> Ros2 Install
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/03/24/keeloq/" rel="next" title="keeloq">
-                  keeloq <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

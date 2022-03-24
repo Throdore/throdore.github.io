@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-03-19T13:28:53.409Z</updated>
+  <updated>2022-03-24T14:08:23.517Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,23 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>keeloq</title>
+    <link href="http://example.com/2022/03/24/keeloq/"/>
+    <id>http://example.com/2022/03/24/keeloq/</id>
+    <published>2022-03-24T13:43:53.000Z</published>
+    <updated>2022-03-24T14:08:23.517Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0x01-Keeloq算法介绍"><a href="#0x01-Keeloq算法介绍" class="headerlink" title="0x01 Keeloq算法介绍"></a>0x01 Keeloq算法介绍</h2><p> KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y31<del>0或者4byte密文y31</del>0，和一个密钥寄存器，用于存放8byte密钥k63~0。</p><span id="more"></span><p>KeeLoq数据加密过程模型图如图1所示，首先定义一个非线性表，这个非线性表有5bits输入码，1bit输出码。它在数据寄存器中间隔均匀地取5bits: y31、y26、y20、y9、y1，通过NLF（Nonlinear Logic Function）运算产生一个输出码。输出码再与数据寄存器中的y16与y0以及密钥寄存器中的k0进行异或运算后生成1bit加密数据码。每生成1bit加密数据码，密钥寄存器和数据寄存器分别进行移位，密钥寄存器作循环移位，加密数据码作为数据寄存器移位的输入，重复上述步骤528次后，得到4byte的输出密文。</p><p>NLF(x4,x3,x2,x1,x0)&#x3D;x4x3x2^x4x3x1^x4x2x0^x4x1x0^x4x2^x4x0^x3x2^x3x0^x2x1^x1x0^x1^x0</p><p>针对于Keeloq算法，目前国内比较通俗易懂的文章要来自独角兽安全团队有关于Keeloq的介绍，本文部分文章来自多篇学术论文，站在巨人的肩膀上，能够走的更远，致敬前辈。</p><p>我们先来看看HCS系列芯片，HCS系列芯片是美国Microchip公司推出的芯片，是为远程无“钥匙”系统中加密识别但愿而设计的KEELOQ滚动码编码解码器，它采用Keeloq滚动码算法对所要传输的代码进行加密。</p><p>以HC201举例来看</p>]]></content>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;0x01-Keeloq算法介绍&quot;&gt;&lt;a href=&quot;#0x01-Keeloq算法介绍&quot; class=&quot;headerlink&quot; title=&quot;0x01 Keeloq算法介绍&quot;&gt;&lt;/a&gt;0x01 Keeloq算法介绍&lt;/h2&gt;&lt;p&gt; KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y31&lt;del&gt;0或者4byte密文y31&lt;/del&gt;0，和一个密钥寄存器，用于存放8byte密钥k63~0。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Ros2 Install</title>
