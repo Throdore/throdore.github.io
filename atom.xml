@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-03-29T08:36:04.603Z</updated>
+  <updated>2022-03-29T13:48:26.662Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,23 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Raspberry</title>
+    <link href="http://example.com/2022/03/29/Raspberry/"/>
+    <id>http://example.com/2022/03/29/Raspberry/</id>
+    <published>2022-03-29T13:45:27.000Z</published>
+    <updated>2022-03-29T13:48:26.662Z</updated>
+    
+    <content type="html"><![CDATA[<p>树莓派镜像烧录用到的一些工具和镜像下载地址。</p><span id="more"></span><h2 id="0x01-镜像下载"><a href="#0x01-镜像下载" class="headerlink" title="0x01 镜像下载"></a>0x01 镜像下载</h2><p>Ubuntu mate 镜像下载：<a href="https://ubuntu-mate.org/download/arm64/focal/thanks/?method=magnet">https://ubuntu-mate.org/download/arm64/focal/thanks/?method=magnet</a></p><h2 id="0x02-工具下载"><a href="#0x02-工具下载" class="headerlink" title="0x02 工具下载"></a>0x02 工具下载</h2><p>树莓派官方烧录工具 ：<a href="https://www.raspberrypi.com/software/">https://www.raspberrypi.com/software/</a></p><p>格式化工具下载：<a href="https://www.sdcard.org/">https://www.sdcard.org/</a></p><p>免去了每次下载时候都要找半天，质量层次不齐。</p>]]></content>
+    
+    
+    <summary type="html">&lt;p&gt;树莓派镜像烧录用到的一些工具和镜像下载地址。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>浅浅研究滚动码(上)</title>
