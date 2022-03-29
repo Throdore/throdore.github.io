@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-03-24T14:08:23.517Z</updated>
+  <updated>2022-03-29T08:05:54.577Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://example.com/2022/03/24/keeloq/"/>
     <id>http://example.com/2022/03/24/keeloq/</id>
     <published>2022-03-24T13:43:53.000Z</published>
-    <updated>2022-03-24T14:08:23.517Z</updated>
+    <updated>2022-03-29T08:05:54.577Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="0x01-Keeloq算法介绍"><a href="#0x01-Keeloq算法介绍" class="headerlink" title="0x01 Keeloq算法介绍"></a>0x01 Keeloq算法介绍</h2><p> KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y31<del>0或者4byte密文y31</del>0，和一个密钥寄存器，用于存放8byte密钥k63~0。</p><span id="more"></span><p>KeeLoq数据加密过程模型图如图1所示，首先定义一个非线性表，这个非线性表有5bits输入码，1bit输出码。它在数据寄存器中间隔均匀地取5bits: y31、y26、y20、y9、y1，通过NLF（Nonlinear Logic Function）运算产生一个输出码。输出码再与数据寄存器中的y16与y0以及密钥寄存器中的k0进行异或运算后生成1bit加密数据码。每生成1bit加密数据码，密钥寄存器和数据寄存器分别进行移位，密钥寄存器作循环移位，加密数据码作为数据寄存器移位的输入，重复上述步骤528次后，得到4byte的输出密文。</p><p>NLF(x4,x3,x2,x1,x0)&#x3D;x4x3x2^x4x3x1^x4x2x0^x4x1x0^x4x2^x4x0^x3x2^x3x0^x2x1^x1x0^x1^x0</p><p>针对于Keeloq算法，目前国内比较通俗易懂的文章要来自独角兽安全团队有关于Keeloq的介绍，本文部分文章来自多篇学术论文，站在巨人的肩膀上，能够走的更远，致敬前辈。</p><p>我们先来看看HCS系列芯片，HCS系列芯片是美国Microchip公司推出的芯片，是为远程无“钥匙”系统中加密识别但愿而设计的KEELOQ滚动码编码解码器，它采用Keeloq滚动码算法对所要传输的代码进行加密。</p><p>以HC201举例来看</p>]]></content>
+    <content type="html"><![CDATA[<h2 id="0x01-Keeloq算法介绍"><a href="#0x01-Keeloq算法介绍" class="headerlink" title="0x01 Keeloq算法介绍"></a>0x01 Keeloq算法介绍</h2><p> KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y31<del>0或者4byte密文y31</del>0，和一个密钥寄存器，用于存放8byte密钥k63~0。</p><span id="more"></span><p>KeeLoq数据加密过程模型图如图1所示，首先定义一个非线性表，这个非线性表有5bits输入码，1bit输出码。它在数据寄存器中间隔均匀地取5bits: y31、y26、y20、y9、y1，通过NLF（Nonlinear Logic Function）运算产生一个输出码。输出码再与数据寄存器中的y16与y0以及密钥寄存器中的k0进行异或运算后生成1bit加密数据码。每生成1bit加密数据码，密钥寄存器和数据寄存器分别进行移位，密钥寄存器作循环移位，加密数据码作为数据寄存器移位的输入，重复上述步骤528次后，得到4byte的输出密文。</p><p>NLF(x4,x3,x2,x1,x0)&#x3D;x4x3x2^x4x3x1^x4x2x0^x4x1x0^x4x2^x4x0^x3x2^x3x0^x2x1^x1x0^x1^x0</p><p>针对于Keeloq算法，目前国内比较通俗易懂的文章要来自独角兽安全团队有关于Keeloq的介绍，本文部分文章来自多篇学术论文，站在巨人的肩膀上，能够走的更远，致敬前辈。</p><p>我们先来看看HCS系列芯片，HCS系列芯片是美国Microchip公司推出的芯片，是为远程无“钥匙”系统中加密识别但愿而设计的KEELOQ滚动码编码解码器，它采用Keeloq滚动码算法对所要传输的代码进行加密。</p><p>这里是拿到的全网公开的一些芯片信息。有了这些介绍之后，我们就可以大致去研究滚动码的加密了。</p><p><img src="https://i.imgur.com/bpSHdH8.png" alt="bpSHdH8"></p><p>可以看到主要的长度大概是67-69bit，对比数据格式来看，大同小异。</p><p>就加密方法来说，这里找一张很简洁的图来说明。</p><p><img src="https://i.imgur.com/vTTWXHi.png" alt="vTTWXHi"></p><p>可以看到主要是有几个数据比较重要，32bit的序列号，64bit的编码密钥，16bit的同步计数值，除此之外还有识别码，功能码等等。</p><ul><li>同步计数值顾名思义就是用来同步计数的每次判断信号合法后汽车执行对应功能并将同步计数值保存下来，当新的信号到来会对比汽车保存的同步计数值，如果小于或者等于将判断信号非法，不执行任何操作，当大于保存的同步计数值，汽车执行对应功能并将同步计数值保存下来。</li><li>功能码顾名思义就是代码执行什么功能的码</li></ul><p>直接看这张图可能会是比较云里雾里。下面我们来看有关于Keeloq编码密钥的算法，这样的话才能更加清晰的明白此算法加密的原理。</p><h2 id="0x02-简单加密"><a href="#0x02-简单加密" class="headerlink" title="0x02 简单加密"></a>0x02 简单加密</h2><ul><li>直接把厂商密钥当作编码密钥的方式</li></ul><p><img src="https://i.imgur.com/0QLuLrx.png" alt="0QLuLrx"></p><h2 id="0x03-标准密钥加密"><a href="#0x03-标准密钥加密" class="headerlink" title="0x03 标准密钥加密"></a>0x03 标准密钥加密</h2><ul><li><p><strong>标准秘钥</strong>生成算法假设序列号为<strong>0x1234567</strong>，通过标准的秘钥生成算法来定的话，首先会拿</p><p><img src="https://i.imgur.com/OeQfq9E.png" alt="OeQfq9E"></p></li></ul><p><img src="https://i.imgur.com/h8c1GIY.png" alt="h8c1GIY"></p>]]></content>
     
     
     <summary type="html">&lt;h2 id=&quot;0x01-Keeloq算法介绍&quot;&gt;&lt;a href=&quot;#0x01-Keeloq算法介绍&quot; class=&quot;headerlink&quot; title=&quot;0x01 Keeloq算法介绍&quot;&gt;&lt;/a&gt;0x01 Keeloq算法介绍&lt;/h2&gt;&lt;p&gt; KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y31&lt;del&gt;0或者4byte密文y31&lt;/del&gt;0，和一个密钥寄存器，用于存放8byte密钥k63~0。&lt;/p&gt;</summary>
