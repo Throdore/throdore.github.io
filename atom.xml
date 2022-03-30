@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-03-30T08:09:02.301Z</updated>
+  <updated>2022-03-30T08:11:07.089Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -21,15 +21,12 @@
     <link href="http://example.com/2022/03/30/Ble-CTF/"/>
     <id>http://example.com/2022/03/30/Ble-CTF/</id>
     <published>2022-03-30T08:01:42.000Z</published>
-    <updated>2022-03-30T08:09:02.301Z</updated>
+    <updated>2022-03-30T08:11:07.089Z</updated>
     
-    <content type="html"><![CDATA[<h2 id="0x01-Ble夺旗"><a href="#0x01-Ble夺旗" class="headerlink" title="0x01 Ble夺旗"></a>0x01 Ble夺旗</h2><p>BLE CTF 的目的是教授蓝牙低功耗客户端和服务器交互的核心概念。虽然它的构建也很有趣，但它的构建目的是教授和强化进入蓝牙黑客世界所需的核心概念。完成此 CTF 后，您应该拥有开始摆弄您能找到的任何 BLE GATT 设备所需的一切。</p><h2 id="0x02-Bluetooth设备烧录"><a href="#0x02-Bluetooth设备烧录" class="headerlink" title="0x02 Bluetooth设备烧录"></a>0x02 Bluetooth设备烧录</h2><p>首先，您需要一个 esp32 微控制器。</p><p>将此项目固件刷新到 ESP32 的最简单方法是刷新提供的预编译二进制文件。您将需要安装<a href="https://github.com/espressif/esptool">esptool</a> 然后执行以下操作： 克隆存储库</p><pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;hackgnar&#x2F;ble_ctf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将目录更改为存储库</p><pre class="line-numbers language-none"><code class="language-none">cd ble_ctf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>闪存预编译的二进制文件</p><pre class="line-numbers language-none"><code class="language-none">esptool.py --chip esp32 --port &#x2F;dev&#x2F;ttyUSB0 \--baud 115200 --before default_reset --after hard_reset write_flash \-z --flash_mode dio --flash_freq 40m --flash_size detect \0x1000 build&#x2F;bootloader&#x2F;bootloader.bin \0x10000 build&#x2F;gatt_server_service_table_demo.bin \0x8000 build&#x2F;partitions_singleapp.bin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p> 编译成功，上电后即可使用ESP32进行低功耗蓝牙挑战。</p><p>挑战系统采用树莓派，因为树莓派系统自身所带的蓝牙适配器适合进行操作，且无需购买其他设备即可进行挑战。因此首先推荐树莓派进行使用。</p><p>夺旗内容可以等待我后续探索后更新，也可以直接参考看雪文章。</p><h2 id="0x03-参考文章"><a href="#0x03-参考文章" class="headerlink" title="0x03 参考文章"></a>0x03 参考文章</h2><p><a href="https://bbs.pediy.com/thread-271543.htm">https://bbs.pediy.com/thread-271543.htm</a></p><p><a href="https://github.com/hackgnar/ble_ctf/blob/master/docs/setup.md">https://github.com/hackgnar/ble_ctf/blob/master/docs/setup.md</a></p><p><a href="https://github.com/hackgnar/ble_ctf">https://github.com/hackgnar/ble_ctf</a></p>]]></content>
+    <content type="html"><![CDATA[<h2 id="0x01-Ble夺旗"><a href="#0x01-Ble夺旗" class="headerlink" title="0x01 Ble夺旗"></a>0x01 Ble夺旗</h2><p>BLE CTF 的目的是教授蓝牙低功耗客户端和服务器交互的核心概念。虽然它的构建也很有趣，但它的构建目的是教授和强化进入蓝牙黑客世界所需的核心概念。完成此 CTF 后，您应该拥有开始摆弄您能找到的任何 BLE GATT 设备所需的一切。</p><span id="more"></span><h2 id="0x02-Bluetooth设备烧录"><a href="#0x02-Bluetooth设备烧录" class="headerlink" title="0x02 Bluetooth设备烧录"></a>0x02 Bluetooth设备烧录</h2><p>首先，您需要一个 esp32 微控制器。</p><p>将此项目固件刷新到 ESP32 的最简单方法是刷新提供的预编译二进制文件。您将需要安装<a href="https://github.com/espressif/esptool">esptool</a> 然后执行以下操作： 克隆存储库</p><pre class="line-numbers language-none"><code class="language-none">git clone https:&#x2F;&#x2F;github.com&#x2F;hackgnar&#x2F;ble_ctf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>将目录更改为存储库</p><pre class="line-numbers language-none"><code class="language-none">cd ble_ctf<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre><p>闪存预编译的二进制文件</p><pre class="line-numbers language-none"><code class="language-none">esptool.py --chip esp32 --port &#x2F;dev&#x2F;ttyUSB0 \--baud 115200 --before default_reset --after hard_reset write_flash \-z --flash_mode dio --flash_freq 40m --flash_size detect \0x1000 build&#x2F;bootloader&#x2F;bootloader.bin \0x10000 build&#x2F;gatt_server_service_table_demo.bin \0x8000 build&#x2F;partitions_singleapp.bin<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre><p> 编译成功，上电后即可使用ESP32进行低功耗蓝牙挑战。</p><p>挑战系统采用树莓派，因为树莓派系统自身所带的蓝牙适配器适合进行操作，且无需购买其他设备即可进行挑战。因此首先推荐树莓派进行使用。</p><p>夺旗内容可以等待我后续探索后更新，也可以直接参考看雪文章。</p><h2 id="0x03-参考文章"><a href="#0x03-参考文章" class="headerlink" title="0x03 参考文章"></a>0x03 参考文章</h2><p><a href="https://bbs.pediy.com/thread-271543.htm">https://bbs.pediy.com/thread-271543.htm</a></p><p><a href="https://github.com/hackgnar/ble_ctf/blob/master/docs/setup.md">https://github.com/hackgnar/ble_ctf/blob/master/docs/setup.md</a></p><p><a href="https://github.com/hackgnar/ble_ctf">https://github.com/hackgnar/ble_ctf</a></p>]]></content>
     
     
-      
-      
-    <summary type="html">&lt;h2 id=&quot;0x01-Ble夺旗&quot;&gt;&lt;a href=&quot;#0x01-Ble夺旗&quot; class=&quot;headerlink&quot; title=&quot;0x01 Ble夺旗&quot;&gt;&lt;/a&gt;0x01 Ble夺旗&lt;/h2&gt;&lt;p&gt;BLE CTF 的目的是教授蓝牙低功耗客户端和服务器交互的核心概念。虽然它的</summary>
-      
+    <summary type="html">&lt;h2 id=&quot;0x01-Ble夺旗&quot;&gt;&lt;a href=&quot;#0x01-Ble夺旗&quot; class=&quot;headerlink&quot; title=&quot;0x01 Ble夺旗&quot;&gt;&lt;/a&gt;0x01 Ble夺旗&lt;/h2&gt;&lt;p&gt;BLE CTF 的目的是教授蓝牙低功耗客户端和服务器交互的核心概念。虽然它的构建也很有趣，但它的构建目的是教授和强化进入蓝牙黑客世界所需的核心概念。完成此 CTF 后，您应该拥有开始摆弄您能找到的任何 BLE GATT 设备所需的一切。&lt;/p&gt;</summary>
     
     
     
