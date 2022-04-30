@@ -6,7 +6,7 @@
   <link href="http://example.com/atom.xml" rel="self"/>
   
   <link href="http://example.com/"/>
-  <updated>2022-03-30T08:11:07.089Z</updated>
+  <updated>2022-04-30T14:14:20.020Z</updated>
   <id>http://example.com/</id>
   
   <author>
@@ -15,6 +15,23 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>智能网联汽车漏洞挖掘赛无线题WP</title>
+    <link href="http://example.com/2022/04/30/%E6%99%BA%E8%83%BD%E7%BD%91%E8%81%94%E6%B1%BD%E8%BD%A6%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E8%B5%9B%E6%97%A0%E7%BA%BF%E9%A2%98WP/"/>
+    <id>http://example.com/2022/04/30/%E6%99%BA%E8%83%BD%E7%BD%91%E8%81%94%E6%B1%BD%E8%BD%A6%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E8%B5%9B%E6%97%A0%E7%BA%BF%E9%A2%98WP/</id>
+    <published>2022-04-30T14:08:01.000Z</published>
+    <updated>2022-04-30T14:14:20.020Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="0x01-题目1-wav格式的故事1"><a href="#0x01-题目1-wav格式的故事1" class="headerlink" title="0x01 题目1:wav格式的故事1"></a>0x01 题目1:wav格式的故事1</h2><p>描述：一般WAV是用来给车机放歌的，试试有没有flag，flag为小写md5 附件下载地址：<br>下载后看到是一个wav文件，用urh打开分析。</p><span id="more"></span><p><img src="https://i.imgur.com/Hci9Rjx.png" alt="Hci9Rjx"></p><p>解调之后查看AC码直接出Flag</p><h2 id="0x02-题目2-wav格式的故事2"><a href="#0x02-题目2-wav格式的故事2" class="headerlink" title="0x02 题目2:wav格式的故事2"></a>0x02 题目2:wav格式的故事2</h2><p>描述：一般WAV是用来给车机放歌的，试试有没有flag，flag为小写md5 附件下载地址：<br>下载之后用urh打开，发现解调后并没有什么实际的信号和信息。播放一次猜测是莫斯密码，手动数莫斯密码。</p><p><img src="https://i.imgur.com/Yc6VdBY.png"></p><p>按照信号的粗细不同，以摩斯密码进行猜解。（。。。。。。</p><p><img src="https://i.imgur.com/Uq03QlR.png" alt="Uq03QlR"></p>]]></content>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;0x01-题目1-wav格式的故事1&quot;&gt;&lt;a href=&quot;#0x01-题目1-wav格式的故事1&quot; class=&quot;headerlink&quot; title=&quot;0x01 题目1:wav格式的故事1&quot;&gt;&lt;/a&gt;0x01 题目1:wav格式的故事1&lt;/h2&gt;&lt;p&gt;描述：一般WAV是用来给车机放歌的，试试有没有flag，flag为小写md5 附件下载地址：&lt;br&gt;下载后看到是一个wav文件，用urh打开分析。&lt;/p&gt;</summary>
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Ble_CTF</title>
