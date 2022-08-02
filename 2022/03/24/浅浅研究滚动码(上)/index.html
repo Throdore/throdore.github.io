@@ -1,0 +1,656 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="0x01 Keeloq算法介绍 KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y310或者4byte密文y310，和一个密钥寄存器，用于存放8byte密钥k63~0。 对于系统工作原理而言，门禁系统应该是先进社会最为常见的系">
+<meta property="og:type" content="article">
+<meta property="og:title" content="浅浅研究滚动码(上)">
+<meta property="og:url" content="http://example.com/2022/03/24/%E6%B5%85%E6%B5%85%E7%A0%94%E7%A9%B6%E6%BB%9A%E5%8A%A8%E7%A0%81(%E4%B8%8A)/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="0x01 Keeloq算法介绍 KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y310或者4byte密文y310，和一个密钥寄存器，用于存放8byte密钥k63~0。 对于系统工作原理而言，门禁系统应该是先进社会最为常见的系">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://i.imgur.com/dw12BZF.png">
+<meta property="og:image" content="https://i.imgur.com/kHWsrin.png">
+<meta property="og:image" content="https://i.imgur.com/bpSHdH8.png">
+<meta property="og:image" content="https://i.imgur.com/vTTWXHi.png">
+<meta property="og:image" content="https://i.imgur.com/0QLuLrx.png">
+<meta property="og:image" content="https://i.imgur.com/OeQfq9E.png">
+<meta property="og:image" content="https://i.imgur.com/h8c1GIY.png">
+<meta property="og:image" content="https://i.imgur.com/W0iD33D.png">
+<meta property="og:image" content="https://i.imgur.com/vwsG0bP.png">
+<meta property="article:published_time" content="2022-03-24T13:43:53.000Z">
+<meta property="article:modified_time" content="2022-08-02T04:08:59.566Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://i.imgur.com/dw12BZF.png">
+  
+  
+  
+  <title>浅浅研究滚动码(上) - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>橡树的个人博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="浅浅研究滚动码(上)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-03-24 21:43" pubdate>
+          2022年3月24日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">浅浅研究滚动码(上)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="0x01-Keeloq算法介绍"><a href="#0x01-Keeloq算法介绍" class="headerlink" title="0x01 Keeloq算法介绍"></a>0x01 Keeloq算法介绍</h2><p> KeeLoq算法的核心思想就是用8byte密钥加密4byte明文，从而得到4byte密文或者用8byte密钥解密4byte密文，还原出原4byte明文。KeeLoq算法演算过程需要定义一个数据寄存器，用于存放4byte明文y31<del>0或者4byte密文y31</del>0，和一个密钥寄存器，用于存放8byte密钥k63~0。</p>
+<p>对于系统工作原理而言，门禁系统应该是先进社会最为常见的系统。车库门禁系统的目的是实现遥控无匙门禁技术 (R KE) ,使驾驶员可以通过遥控器的按钮来开关库门 , 下图为其原理结构图。系统由遥控编码器及接收解码 器组成。其中遥控器由编码芯片、发射电路组成 ,附加 按键及电池 ,是袖珍发射装置 ,可随身携带 ;接收器由接 收电路、解码芯片、控制电路及执行机构组成 ,执行机构又包括门控电机、声光报警等。下面分析系统各部分的设计及应用。 </p>
+<p><img src="https://i.imgur.com/dw12BZF.png" srcset="/img/loading.gif" lazyload alt="dw12BZF"></p>
+<p>KeeLoq数据加密过程模型图下图所示，首先定义一个非线性表，这个非线性表有5bits输入码，1bit输出码。它在数据寄存器中间隔均匀地取5bits: y31、y26、y20、y9、y1，通过NLF（Nonlinear Logic Function）运算产生一个输出码。输出码再与数据寄存器中的y16与y0以及密钥寄存器中的k0进行异或运算后生成1bit加密数据码。每生成1bit加密数据码，密钥寄存器和数据寄存器分别进行移位，密钥寄存器作循环移位，加密数据码作为数据寄存器移位的输入，重复上述步骤528次后，得到4byte的输出密文。</p>
+<p>NLF(x4,x3,x2,x1,x0)&#x3D;x4x3x2^x4x3x1^x4x2x0^x4x1x0^x4x2^x4x0^x3x2^x3x0^x2x1^x1x0^x1^x0</p>
+<p><img src="https://i.imgur.com/kHWsrin.png" srcset="/img/loading.gif" lazyload alt="kHWsrin"></p>
+<p>针对于Keeloq算法研究部分，本文部分内容来自多篇学术论文，站在巨人的肩膀上，能够走的更远，致敬前辈。</p>
+<p>我们先来看看HCS系列芯片，HCS系列芯片是美国Microchip公司推出的芯片，是为远程无“钥匙”系统中加密识别但愿而设计的KEELOQ滚动码编码解码器，它采用Keeloq滚动码算法对所要传输的代码进行加密。</p>
+<p>这里是拿到的全网公开的一些芯片信息。有了这些介绍之后，我们就可以大致去研究滚动码的加密了。</p>
+<p><img src="https://i.imgur.com/bpSHdH8.png" srcset="/img/loading.gif" lazyload alt="bpSHdH8"></p>
+<p>可以看到主要的长度大概是67-69bit，对比数据格式来看，大同小异。</p>
+<p>就加密方法来说，这里找一张很简洁的图来说明。</p>
+<p><img src="https://i.imgur.com/vTTWXHi.png" srcset="/img/loading.gif" lazyload alt="vTTWXHi"></p>
+<p>可以看到主要是有几个数据比较重要，32bit的序列号，64bit的编码密钥，16bit的同步计数值，除此之外还有识别码，功能码等等。</p>
+<ul>
+<li>同步计数值顾名思义就是用来同步计数的每次判断信号合法后汽车执行对应功能并将同步计数值保存下来，当新的信号到来会对比汽车保存的同步计数值，如果小于或者等于将判断信号非法，不执行任何操作，当大于保存的同步计数值，汽车执行对应功能并将同步计数值保存下来。</li>
+<li>功能码顾名思义就是代码执行什么功能的码</li>
+</ul>
+<p>直接看这张图可能会是比较云里雾里。下面我们来看有关于Keeloq编码密钥的算法，这样的话才能更加清晰的明白此算法加密的原理。</p>
+<h2 id="0x02-简单加密"><a href="#0x02-简单加密" class="headerlink" title="0x02 简单加密"></a>0x02 简单加密</h2><ul>
+<li>直接把厂商密钥当作编码密钥的方式</li>
+</ul>
+<p><img src="https://i.imgur.com/0QLuLrx.png" srcset="/img/loading.gif" lazyload alt="0QLuLrx"></p>
+<h2 id="0x03-标准密钥加密"><a href="#0x03-标准密钥加密" class="headerlink" title="0x03 标准密钥加密"></a>0x03 标准密钥加密</h2><ul>
+<li><p><strong>标准秘钥</strong>生成算法假设序列号为<strong>0x1234567</strong>，通过标准的秘钥生成算法来定的话，首先会拿</p>
+<p><img src="https://i.imgur.com/OeQfq9E.png" srcset="/img/loading.gif" lazyload alt="OeQfq9E"></p>
+</li>
+</ul>
+<p><img src="https://i.imgur.com/h8c1GIY.png" srcset="/img/loading.gif" lazyload alt="h8c1GIY"></p>
+<h2 id="0x04-安全加密"><a href="#0x04-安全加密" class="headerlink" title="0x04 安全加密"></a>0x04 安全加密</h2><p><img src="https://i.imgur.com/W0iD33D.png" srcset="/img/loading.gif" lazyload alt="W0iD33D"></p>
+<h2 id="0x05-三种区别"><a href="#0x05-三种区别" class="headerlink" title="0x05 三种区别"></a>0x05 三种区别</h2><ul>
+<li>简单加密直接拿厂商秘钥加密的话，直接可以对其他的设备进行解密操作。</li>
+<li>标准秘钥生成算法，因为每个遥控序列号都是不同的所以生出来的秘钥也是不同的。如果能获取到编码秘钥就是只对这个设备有用然而对其他的设备都没有效果的，但是如果厂商秘钥被其他人获取了，因为发送信号时候会带着28Bit的序列号，所以只要别人拿到了这个厂商秘钥就能解密信号。</li>
+<li>安全秘钥生成算法就不同了，即使是厂商秘钥被别人知道了，也只能拿到前32位秘钥，后32位是根据种子码生成的，而种子码又是随机生成的，相比较前两种加密算法来说，安全密钥生成算法是较为安全的一种算法。</li>
+</ul>
+<p>最后附加密密钥产生原理图和滚动编码产生原理图。</p>
+<p><img src="https://i.imgur.com/vwsG0bP.png" srcset="/img/loading.gif" lazyload alt="vwsG0bP"></p>
+<h2 id="0x06-参考文章"><a href="#0x06-参考文章" class="headerlink" title="0x06 参考文章"></a>0x06 参考文章</h2><p>[1]使用 HackCube-Special 分析滚动码信号-360无线电安全研究院</p>
+<p>[2]基于KEELOQ技术的车库门禁系统</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>浅浅研究滚动码(上)</div>
+      <div>http://example.com/2022/03/24/浅浅研究滚动码(上)/</div>
+    </div>
+    <div class="license-meta">
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年3月24日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/29/Raspberry/" title="Raspberry">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Raspberry</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/19/ros2/" title="Ros2 Install">
+                        <span class="hidden-mobile">Ros2 Install</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      陕ICP备
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+          
+          <span>2022000952号-1</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

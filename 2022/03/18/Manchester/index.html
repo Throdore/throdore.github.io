@@ -1,0 +1,655 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="John Doe">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="大家好，我是橡树，今天给大家带来有关无线遥控信号逆向分析的文章。当今社会，电子产品大量依靠各种无线传输技术，无线通信技术上的传输、认证、加密等安全问题，在各种设备对无线技术依赖加深的情况下变得越来越重要。无线安全的研究领域非常的宽泛，随着越来越多的物联网控制设备采用无线遥控信号，无线安全方面的研究也逐渐被更多的网络安全研究员所关注。本文结合作者在无线安全领域做出的一些实例侦听和逆向分析，希望能够抛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Manchester(逆向拨码器拨码数据)">
+<meta property="og:url" content="http://example.com/2022/03/18/Manchester/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="大家好，我是橡树，今天给大家带来有关无线遥控信号逆向分析的文章。当今社会，电子产品大量依靠各种无线传输技术，无线通信技术上的传输、认证、加密等安全问题，在各种设备对无线技术依赖加深的情况下变得越来越重要。无线安全的研究领域非常的宽泛，随着越来越多的物联网控制设备采用无线遥控信号，无线安全方面的研究也逐渐被更多的网络安全研究员所关注。本文结合作者在无线安全领域做出的一些实例侦听和逆向分析，希望能够抛">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/7uLFjH.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/RnfXUM.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/ywzvGm.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/uqV0tT.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/8IylEZ.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/goFjS2.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/fShsuC.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/L2tSru.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/bz10Xo.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/2aVaro.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/1qIGG2.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/62LuE8.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/J5IQSW.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/P3pGMT.png">
+<meta property="og:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/aWl350.png">
+<meta property="article:published_time" content="2022-03-18T11:43:26.000Z">
+<meta property="article:modified_time" content="2022-03-19T08:49:14.000Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://gitee.com/Theodorea/oss/raw/master/uPic/7uLFjH.png">
+  
+  
+  
+  <title>Manchester(逆向拨码器拨码数据) - Hexo</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.2.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>橡树的个人博客</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Manchester(逆向拨码器拨码数据)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-03-18 19:43" pubdate>
+          2022年3月18日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.2k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          44 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Manchester(逆向拨码器拨码数据)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>大家好，我是橡树，今天给大家带来有关无线遥控信号逆向分析的文章。当今社会，电子产品大量依靠各种无线传输技术，无线通信技术上的传输、认证、加密等安全问题，在各种设备对无线技术依赖加深的情况下变得越来越重要。无线安全的研究领域非常的宽泛，随着越来越多的物联网控制设备采用无线遥控信号，无线安全方面的研究也逐渐被更多的网络安全研究员所关注。本文结合作者在无线安全领域做出的一些实例侦听和逆向分析，希望能够抛砖引玉为无线安全研究做出贡献，同时对于研究过程中的遇到的一些问题希望可以得到解答。</p>
+<span id="more"></span>
+
+<h1 id="0x01-信号101"><a href="#0x01-信号101" class="headerlink" title="0x01 信号101"></a>0x01 信号101</h1><p>要研究一个无线遥控器，首先我们需要先了解该无线遥控信号一般工作所在的ISM频段，例如汽车无线钥匙和电动自行车的工作频段通常是在315Mhz或433Mhz传输数据。如果是无钥匙启动系统则多会采用123Mhz或者13.56Mhz的RFID技术。车库卷闸门遥控信号一般工作频段是在315 Mhz，除此之外还有车库收费挡杆的遥控信号频段都大多是工作在433 Mhz或315Mhz频段。诸如门禁卡、无线钥匙、无线遥控器、手机、汽车等只要使用了无线介质进行数据交互，那么这条无线链路就有可能被监听、解密、重放、劫持甚至被入侵控制。<br>当无线遥控钥匙在发了一串0和1之后，需要正确的调制及编码方式，收发双方才可以进行交互，通常信号的调制方面主要以OOK&#x2F;ASK&#x2F;FSK为主，这几种调制方案的应用非常广泛，其中OOK调制方案是最简单的，仅仅需要将载波信号发送到功放和天线。当这些信号被别有用心的人捕获或者破解，后果是无法想象的。</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/7uLFjH.png" srcset="/img/loading.gif" lazyload alt="7uLFjH"></p>
+<p>(ASK信号在频谱上的现象)</p>
+<h1 id="0x02-软件无线电"><a href="#0x02-软件无线电" class="headerlink" title="0x02 软件无线电"></a>0x02 软件无线电</h1><p><em>软件无线电，即Software Defined Radio(SDR)，有时也成为Software Radio</em><br>由于软件无线电具有能够快速开发、迭代更新的特点，所以它特别适合用在一些定制化的应用中。例如学生和研究人员用它来处理无线信号。产品开发类的人员用它开发设备。高校内的通信教学活动以及业余无线电爱好者的学习和使用。</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/RnfXUM.png" srcset="/img/loading.gif" lazyload alt="RnfXUM"></p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/ywzvGm.png" srcset="/img/loading.gif" lazyload alt="ywzvGm"></p>
+<p>无线信号安全的研究必然离不开相关硬件的支持，在这里我将研究所用到的软硬件工具及SDR平台进行简单介绍。</p>
+<h1 id="0x03-无线安全研究工具"><a href="#0x03-无线安全研究工具" class="headerlink" title="0x03 无线安全研究工具"></a>0x03 无线安全研究工具</h1><p>Pluto-SDR: Pluto-SDR由亚德诺半导体出品，整体设计方案是AD9363射频收发器+ZYNQ7010FPGA。AD9363的收发频率为325 MHz至3.8 GHz，支持时分双工(TDD)和频分双工(FDD)工作模式，AD&#x2F;DA为12bit性能优于HackRF One。Pluto-SDR可在多个平台上使用，例如GNURADIO和MATLAB平台，可以实现基础的无线信号收发和无线信号安全的实验。以下数据表是各种常见SDR硬件之间的对比。</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/uqV0tT.png" srcset="/img/loading.gif" lazyload alt="uqV0tT"></p>
+<p><em>（几种SDR的对比-图片来源网络）</em><br><em>RTL-SDR: 一个低廉的家用消费档次的 DVB-T USB 接口的接收机的创新发明，也是最为廉价的软件无线电接收平台。</em><br><em>CC1101: 美国TI公司出品的工作在低于1GHz频段的无线数传芯片,一款低于1GHz设计旨在用于极低功耗RF应用。其主要针对工业、科研和医疗(ISM)以及短距离无线通信设备(SRD)</em><br>Raspberry Pi: 只有信用卡大小的微型电脑，其系统基于Linux，树莓派可作为电台进行信号接收，在可控的范围之内，采用杜邦线即可实现基础的实验效果。<br>RTL-433: rtl_433 (despite the name) is a generic data receiver, mainly for the 433.92 MHz, 868 MHz (SRD), 315 MHz, 345 MHz, and 915 MHz ISM bands.It works with RTL-SDR and&#x2F;or SoapySDR. Actively tested and supported are Realtek RTL2832 based DVB dongles (using RTL-SDR) and LimeSDR (LimeSDR USB and LimeSDR mini engineering samples kindly provided by MyriadRf), PlutoSDR, HackRF One (using SoapySDR drivers), as well as SoapyRemote. —来自官方解释</p>
+<p>有了这些软硬件设备的支持和协调之下，使得我们的安全研究有了更近一步的突破，在这里要感谢学院的科创团队为我们研究团队提供的设备支持和资金使得我们可以更加清晰的完成无线信号的基础研究。</p>
+<h1 id="0x03-无线信号捕获与解调"><a href="#0x03-无线信号捕获与解调" class="headerlink" title="0x03 无线信号捕获与解调"></a>0x03 无线信号捕获与解调</h1><p>普通的固定码遥控器中最为常见的是四键遥控器。在此系统中，主机依靠无线配件的地址信号，通俗来讲就是一组数字编号用来区分不同的无线配件。如果两个无线配件的地址相同，主机就把它们当作是同一个无线配件。在四键遥控器中，一般有8位地址可以由用户设置，每位地址可以选择3种状态0、1或者悬空。这样在不重复的情况下，总共就可以有3的8次方，也就是6561个地址。在进行自动对码的时候，主机收到这些信息会和以前加入的配件信息进行比较，如果地址是以前对码时候加入过的，主机就接受这个遥控器的指令，否则主机不会对于这个遥控器有任何的响应。所以在实验开始之前，我们首先要做的就是去捕获设备的无线信号码。大致有以下几种方法可以供我们去捕获设备的无线信号工作频段。<br>第一种方法，也是最为简单的方法是直接拆开要捕获信号的发射设备，查询其FCC ID或CMIIT ID信息，该类网站上收录有其硬件的发射功率，发射频谱等信息资料，可以通过检索其资料对于无线信号工作频段进行了解，进而捕获目标发射设备的信号。在URH的教学案例视频中作者也有提到如何去具体的查询FCC ID以及拿到FCC ID之后具体如何去查看更为详细的硬件信息。<br>第二种方法是直接使用软件无线电设备，频谱分析软件如GQRX等设备，在较大的频谱范围之内连续触发要捕获信号的发射设备，使其不断向外发出信号，大致判断其工作范围，然后在进行验证，获得设备最终的无线信号工作频谱频段。<br>以下为使用第二种方法获得要捕获信号的发射设备的无线信号工作频段图:</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/8IylEZ.png" srcset="/img/loading.gif" lazyload alt="8IylEZ"></p>
+<p>（无线门铃信号工作频谱）</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/goFjS2.png" srcset="/img/loading.gif" lazyload alt="goFjS2"></p>
+<p>（无线门铃信号频谱图）<br>在获取到发射设备的无线信号工作频谱之后，就可以对于其信号进行录制和逆向分析。<br>如上即为录制的普通无线门铃信号，对其进行解调后即可将其信号转换为01表示的数字信号或者转化为HEX码，一般来讲直接观察HEX码是更容易使我们逆向信号的数据，然后对于该数字信号进行记录。<br>然而人工观察的方法容易出错(尤其是通过01去判断信号信息)，在这里我会更加的依赖软件的分析，接下来我们将我们捕获的信号进行信号逆向分析，试图将其从无线电信号转化为数字信号。</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/fShsuC.png" srcset="/img/loading.gif" lazyload alt="fShsuC"></p>
+<p>（自动解调-失败）</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/L2tSru.png" srcset="/img/loading.gif" lazyload alt="L2tSru"></p>
+<p>（手动解调-成功）<br>我们可以看到使用软件自动解调之后显示的数据信号并非我们实际在频谱中可以看到的数字信号。但是我们知道了默认选择的是ASK的解调方式，所以我们针对于该解调方式进行一些其他的操作。更换本地采样率继续进行解调，发现解调成功，成功逆向出该遥控信号的数字信号。然后通过CC1101，树莓派或者Pluto SDR设备对于该信号进行测试，观察门铃接收端是否有相应的响应，有响应反馈即代表信号逆向成功。<br>下面我们针对于四键遥控器的设计过程及原理图进行具体的分析：</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/bz10Xo.png" srcset="/img/loading.gif" lazyload alt="bz10Xo"></p>
+<p>(拨码遥控器)</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/2aVaro.png" srcset="/img/loading.gif" lazyload alt="2aVaro"></p>
+<p>（类似的原理图）<br>由于此拨码遥控器买来时候并未配套有相关的电路说明文档，因此我在研究清楚之后寻找了一个类似的电路图供大家参考。先看左边的1-8个键码，对应右图中的A0-A7。除此之外，还配备有四个微动开关。分别为S1、S2、S3、S4。在进行测试的时候，首先将8个拨码器全部下拉到底。此时通过RTL-433得到的信息是FF FF FC 80，转换为01二进制为：11111111 11111111 11111100 1。此时在重新拨号，最后的知，80为默认结尾，可以直接忽略。因为不管每次怎么拨，按哪个微动开关，最终都为80，前面的FC代表的是四个微动开关中的一个微动开关。FF FF 即为拨码器可以改变的值。又因为其本身包含三种状态，要么是00(下拉) 要么是11(上拉)，要么是10(中间悬空)，很轻松我们就完全逆向了此拨码遥控器。</p>
+<h1 id="0x04-无线遥控信号的物联网化-引申概念"><a href="#0x04-无线遥控信号的物联网化-引申概念" class="headerlink" title="0x04 无线遥控信号的物联网化(引申概念)"></a>0x04 无线遥控信号的物联网化(引申概念)</h1><p>进行了上面的一些实验之后，我们思考如何将收到的无线遥控信号发送到更远端的距离并且将其保存。如果可能更希望其可以在物联网平台上被逆向分析。于是为了解决以上的问题我们进行实验尝试。Home Assistant 是一款基于 Python 的智能家居开源系统，支持众多品牌的智能家居设备，可以轻松实现设备的语音控制、自动化等。因为Home Assistant 非常容易部署，所以我们便决定采用Home Assistant 的物联网方案将无线遥控信号物联网化。除此之外，我们还需要应用到MQTT进行远距离通信。便于将我们在本地捕获到的无线遥控信号解码后上传到我们的MQTT服务器，最终和我们的Home Assistant智能家居平台进行通信，实现无线遥控信号在被捕获之后保存和传输到更远的地方。</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/1qIGG2.png" srcset="/img/loading.gif" lazyload alt="1qIGG2"></p>
+<p>（Home Assistant Logo）</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/62LuE8.png" srcset="/img/loading.gif" lazyload alt="62LuE8"></p>
+<p>（MQTT监听解码数据）<br>首先我们需要安装Home Assistant，这里我使用的是树莓派安装Home Assistant 的方式，因为rtl-433程序也是运行在树莓派上的,将树莓派安装好Home Assistant之后也便于我们进行端口映射和转发。这张图是在树莓派上安装Home Assistant的不同方式:</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/J5IQSW.png" srcset="/img/loading.gif" lazyload alt="J5IQSW"></p>
+<p>其中Hassbian没有图形界面，详见：<a target="_blank" rel="noopener" href="https://www.home-assistant.io/blog/2019/10/26/rip-hassbian/">https://www.home-assistant.io/blog/2019/10/26/rip-hassbian/</a><br>Mossbian是由Hassbian改版的版本，详情：<a target="_blank" rel="noopener" href="https://home-assistant.cc/mossbian/">https://home-assistant.cc/mossbian/</a> 目前已停止维护，遂放弃这两种方案。直接在树莓派的系统Raspbian上通过手动的方式安装Home Assistant。<br>具体安装参考链接:<a target="_blank" rel="noopener" href="https://comhome-assistant.cc/installation/raspberrypi/raspbian/">https://comhome-assistant.cc/installation/raspberrypi/raspbian/</a><br>安装完成之后我们便可以从局域网内任意终端浏览器访问 <a target="_blank" rel="noopener" href="http://raspberry/">http://Raspberry</a> IP :8123，进入 Home Asssitant。<br>物联网平台安装完毕之后，我们还需要安装MQTT服务器，之前参加物联网相关的比赛，华为云社区为我们提供了云服务器的代金券，因此我们便使用华为云的服务器去搭建MQTT服务器，让我们捕获到的遥控信号通过MQTT传输到云平台进而传输到我们的物联网平台上。<br>MQTT（Message Queuing Telemetry Transport）消息队列遥测传输协议，是一种基于发布&#x2F;订阅（publish&#x2F;subscribe）模式的”轻量级”通讯协议，该协议构建于TCP&#x2F;IP协议上，由IBM在1999年发布。<br>MQTT最大优点在于，可以以极少的代码和有限的带宽，为连接远程设备提供实时可靠的消息服务。作为一种低开销、低带宽占用的即时通讯协议，使其在物联网、小型设备、移动应用等方面有较广泛的应用。<br>了解了MQTT之后，我们决定在云服务器上部署Eclipse Mosquitto进行MQTT协议之间的一些通信。Eclipse Mosquitto是一个开源消息代理，实现了MQTT协议版本3.1和3.1.1。Mosquitto轻量，适用于低功耗单板计算机到完整服务器的所有设备。Mosquitto项目还提供了用于实现MQTT客户端的C库以及非常受欢迎的mosquitto_pub和mosquitto_sub命令行MQTT客户端。Mosquitto是用C语言实现MQTT协议的Broker。是一款实现了消息推送协议 MQTT v3.1 的开源消息代理软件，提供轻量级的，支持可发布&#x2F;可订阅的的消息推送模式，使设备对设备之间的短消息通信变得简单，比如现在应用广泛的低功耗传感器，手机、嵌入式计算机、微型控制器等移动设备。一个典型的应用案例就是 Andy Stanford-ClarkMosquitto(MQTT协议创始人之一)在家中实现的远程监控和自动化。<br>我们也对于其进行安装。成功安装Mosquitto后MQTT通信的测试。</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/P3pGMT.png" srcset="/img/loading.gif" lazyload alt="P3pGMT"></p>
+<p>（MQTT通信测试）<br>在搭建完成了上述的实验环境之后，我们将对于我们的想法进行验证，让我们在本地通过软件无线电设备捕获到的设备信号通过MQTT协议传输到我们的MQTT服务器上，进而将数据转发到物联网平台上，在物联网平台上对于该Publish进行监听，最终获取到从远端传输而来解码好的无线遥控信号。</p>
+<p><img src="https://gitee.com/Theodorea/oss/raw/master/uPic/aWl350.png" srcset="/img/loading.gif" lazyload alt="aWl350"></p>
+<p>（MQTT实时接收到的已解码数据）<br>具体实现视频链接<br>【MQTT实时接收已解码数据-哔哩哔哩】 <a target="_blank" rel="noopener" href="https://b23.tv/edY1XoO">https://b23.tv/edY1XoO</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Manchester(逆向拨码器拨码数据)</div>
+      <div>http://example.com/2022/03/18/Manchester/</div>
+    </div>
+    <div class="license-meta">
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2022年3月18日</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>许可协议</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/19/ros2/" title="Ros2 Install">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Ros2 Install</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+    <!-- 备案信息 ICP for China -->
+    <div class="beian">
+  <span>
+    <a href="http://beian.miit.gov.cn/" target="_blank" rel="nofollow noopener">
+      陕ICP备
+    </a>
+  </span>
+  
+    
+      <span>
+        <a
+          href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=12345678"
+          rel="nofollow noopener"
+          class="beian-police"
+          target="_blank"
+        >
+          
+            <span style="visibility: hidden; width: 0">|</span>
+            <img src="/img/police_beian.png" srcset="/img/loading.gif" lazyload alt="police-icon"/>
+          
+          <span>2022000952号-1</span>
+        </a>
+      </span>
+    
+  
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
